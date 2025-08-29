@@ -1,4 +1,4 @@
-name: flutter_app
+name: aura_cast
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -31,7 +31,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^0.13.5
+  http: ^1.2.2
+  shared_preferences: ^2.3.2
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -54,6 +55,20 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  assets:
+    - assets/picnic.jpg
+    - assets/sunset_walk.jpg
+    - assets/rain_read.jpg
+    - assets/blanket.jpg
+    - assets/adventure.jpg
+    - assets/run.jpg
+    - assets/coffee.jpg
+    - assets/study.jpg
+    - assets/focus.jpg
+    - assets/reflect.webp
+    - assets/discover.jpg
+
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
