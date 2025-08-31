@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:aura_cast/widgets/icon.dart';
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});
