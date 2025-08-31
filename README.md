@@ -1,16 +1,12 @@
-# aura_cast
+# AuraCast
 
 A new Flutter project.
 
-## Getting Started
+AuraCast is a weather application that makes recommendations matching the mood based on the
+weather. On rainy days it might suggest cozy indoor activities like reading, mellow playlists, or hot drink
+recipes, while sunny and clear weather inspires recommendations for outdoor activities such as jogging, picnics,
+or energizing music.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Lead Programmer: Garcia, Daryl Harvey M. (I'm Alexa Garcia rin po since I used my sister's laptop to code)
+UI/UX: Bongon, Joshwell
+Technical Writer: Advincula, Klyde
