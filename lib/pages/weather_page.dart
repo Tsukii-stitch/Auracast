@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../services/weather_service.dart';
 import '../widgets/mood_selector.dart';
 import '../widgets/recommendation_card.dart';
-import 'history_page.dart';
+import '../widgets/icon.dart';
 import '../models/recommendation.dart';
 
 class WeatherPage extends StatefulWidget {
@@ -18,7 +18,6 @@ class _WeatherPageState extends State<WeatherPage> {
   String _weatherDescription = "";
   bool _isLoading = true;
   String _error = "";
-
   String? _selectedMood;
 
   @override
@@ -63,7 +62,8 @@ class _WeatherPageState extends State<WeatherPage> {
   }
 
   List<Recommendation> _getRecommendations() {
-    return Recommendation.getRecommendations(_selectedMood, _weatherDescription);
+    return Recommendation.getRecommendations(
+        _selectedMood, _weatherDescription);
   }
 
   IconData _getWeatherIcon() {
@@ -86,6 +86,12 @@ class _WeatherPageState extends State<WeatherPage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text('AuraCast'),
+        actions: const [
+          TopRightIcon(), // <-- Custom icon button that navigates to HistoryPage
+        ],
+      ),
       body: SafeArea(
         child: _isLoading
             ? const Center(child: CircularProgressIndicator())
@@ -93,12 +99,8 @@ class _WeatherPageState extends State<WeatherPage> {
                 padding: const EdgeInsets.all(20),
                 child: ListView(
                   children: [
-                    const Text(
-                      "AuraCast",
-                      style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                    ),
                     const SizedBox(height: 20),
+
                     Row(
                       children: [
                         Icon(_getWeatherIcon(), size: 28),
@@ -107,6 +109,7 @@ class _WeatherPageState extends State<WeatherPage> {
                             style: const TextStyle(fontSize: 18)),
                       ],
                     ),
+
                     const SizedBox(height: 30),
 
                     MoodSelector(
@@ -121,7 +124,8 @@ class _WeatherPageState extends State<WeatherPage> {
                     const SizedBox(height: 30),
 
                     ...recommendations
-                        .map((rec) => RecommendationCard(recommendation: rec))
+                        .map((rec) =>
+                            RecommendationCard(recommendation: rec))
                         .toList(),
 
                     const SizedBox(height: 30),
@@ -131,22 +135,6 @@ class _WeatherPageState extends State<WeatherPage> {
                           _selectedMood == null ? null : () async => _saveMood(),
                       icon: const Icon(Icons.save),
                       label: const Text("Save Mood to History"),
-                    ),
-
-                    const SizedBox(height: 30),
-
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HistoryPage()),
-                        );
-                      },
-                      child: const Text(
-                        "View History",
-                        style: TextStyle(decoration: TextDecoration.underline),
-                      ),
                     ),
                   ],
                 ),
