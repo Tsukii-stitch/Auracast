@@ -58,8 +58,18 @@ flutter:
   assets:
     - assets/picnic.jpg
     - assets/sunset_walk.jpg
+    - assets/cycling.webp
+    - assets/icecream.jpg
+    - assets/dance.jpg
+    - assets/games.jpg 
+    - assets/dance.jpg
+    - assets/games.jpg
     - assets/rain_read.jpg
     - assets/blanket.jpg
+    - assets/thoughts.jpg
+    - assets/art.jpg
+    - assets/journaling.jpg
+    - assets/meditation.jpg
     - assets/adventure.jpg
     - assets/run.jpg
     - assets/coffee.jpg
@@ -67,8 +77,7 @@ flutter:
     - assets/focus.jpg
     - assets/reflect.webp
     - assets/discover.jpg
-
-
+    - assets/cafe.webp
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

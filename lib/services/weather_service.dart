@@ -23,10 +23,20 @@ class WeatherService {
       final weatherCode = data["current_weather"]["weathercode"];
 
       String description;
-      if (weatherCode >= 0 && weatherCode <= 3) {
+
+      // Map codes to descriptive weather
+      if (weatherCode == 0) {
         description = "Clear Sky";
+      } else if (weatherCode >= 1 && weatherCode <= 3) {
+        description = "Partly Cloudy";
+      } else if (weatherCode == 45 || weatherCode == 48) {
+        description = "Foggy";
+      } else if (weatherCode >= 51 && weatherCode <= 57) {
+        description = "Drizzle";
       } else if (weatherCode >= 61 && weatherCode <= 67) {
         description = "Rainy";
+      } else if (weatherCode >= 80 && weatherCode <= 82) {
+        description = "Rain Showers";
       } else if (weatherCode >= 95 && weatherCode <= 99) {
         description = "Thunderstorm";
       } else {
