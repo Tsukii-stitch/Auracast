@@ -8,5 +8,5 @@ recipes, while sunny and clear weather inspires recommendations for outdoor acti
 or energizing music.
 
 Lead Programmer: Garcia, Daryl Harvey M. (I'm Alexa Garcia rin po since I used my sister's laptop to code)
-UI/UX: Bongon, Joshwell
-Technical Writer: Advincula, Klyde
+UI/UX: Advincula, Klyde 
+Technical Writer: Bongon, Joshwell
