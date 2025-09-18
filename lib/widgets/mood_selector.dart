@@ -17,7 +17,6 @@ class MoodSelector extends StatelessWidget {
   });
 
   @override
-  // Define available moods with corresponding emojis.
   Widget build(BuildContext context) {
     final Map<String, String> moodEmojis = {
       "Content": "🙂",
@@ -33,29 +32,51 @@ class MoodSelector extends StatelessWidget {
         // Section title
         const Text("How are you feeling?", style: TextStyle(fontSize: 16)),
         const SizedBox(height: 10),
-        // Horizontal scrollable list of moods as ChoiceChips
+        // Horizontal scrollable list of moods
         SizedBox(
-          height: 40,
+          height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: moodEmojis.entries.map((entry) {
-              // Check if the current mood is selected
               final isSelected = selectedMood == entry.key;
               return Padding(
                 padding: const EdgeInsets.only(right: 8),
-                child: ChoiceChip(
-                  // Display the mood label (e.g., "Happy") with its emoji
-                  label: Text(entry.key),
-                  avatar: Text(entry.value),
-                  // Highlight if selected
-                  selected: isSelected,
-                  selectedColor: Colors.blue.shade100,
-                  // Change label color depending on selection
-                  labelStyle: TextStyle(
-                    color: isSelected ? Colors.black : Colors.grey[700],
+                child: GestureDetector(
+                  onTap: () => onMoodSelected(entry.key),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeInOut,
+                    padding: EdgeInsets.all(isSelected ? 8 : 4),
+                    decoration: BoxDecoration(
+                      color: isSelected
+                          ? Colors.blue.shade100
+                          : Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Emoji with zoom effect
+                        AnimatedScale(
+                          scale: isSelected ? 1.5 : 1.0,
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeInOut,
+                          child: Text(
+                            entry.value,
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          entry.key,
+                          style: TextStyle(
+                            color: isSelected ? Colors.black : Colors.grey[700],
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  // When a mood is tapped, call the parent callback
-                  onSelected: (_) => onMoodSelected(entry.key),
                 ),
               );
             }).toList(),
