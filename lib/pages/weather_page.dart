@@ -85,58 +85,82 @@ class _WeatherPageState extends State<WeatherPage> {
         _selectedMood != null ? _getRecommendations() : [];
 
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('AuraCast'),
         actions: const [
-          TopRightIcon(), // <-- Custom icon button that navigates to HistoryPage
+          TopRightIcon(),
         ],
       ),
       body: SafeArea(
         child: _isLoading
             ? const Center(child: CircularProgressIndicator())
-            : Padding(
-                padding: const EdgeInsets.all(20),
-                child: ListView(
-                  children: [
-                    const SizedBox(height: 20),
+            : Container(
+                // 🌥️ Cloudy background theme
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.blueGrey.shade200,
+                      Colors.grey.shade400,
+                    ],
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: ListView(
+                    children: [
+                      const SizedBox(height: 20),
 
-                    Row(
-                      children: [
-                        Icon(_getWeatherIcon(), size: 28),
-                        const SizedBox(width: 8),
-                        Text("$_temperature, $_weatherDescription",
-                            style: const TextStyle(fontSize: 18)),
-                      ],
-                    ),
+                      Row(
+                        children: [
+                          Icon(_getWeatherIcon(), size: 28),
+                          const SizedBox(width: 8),
+                          Text("$_temperature, $_weatherDescription",
+                              style: const TextStyle(fontSize: 18)),
+                        ],
+                      ),
 
-                    const SizedBox(height: 30),
+                      const SizedBox(height: 30),
 
-                    MoodSelector(
-                      selectedMood: _selectedMood,
-                      onMoodSelected: (mood) {
-                        setState(() {
-                          _selectedMood = mood;
-                        });
-                      },
-                    ),
+                      MoodSelector(
+                        selectedMood: _selectedMood,
+                        onMoodSelected: (mood) {
+                          setState(() {
+                            _selectedMood = mood;
+                          });
+                        },
+                      ),
 
-                    const SizedBox(height: 30),
+                      const SizedBox(height: 30),
 
-                    ...recommendations
-                        .map((rec) =>
-                            RecommendationCard(recommendation: rec))
-                        .toList(),
+                      // ⭐ Animated recommendations list
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 400),
+                        child: _selectedMood == null
+                            ? const SizedBox.shrink()
+                            : Column(
+                                key: ValueKey(_selectedMood),
+                                children: recommendations
+                                    .map((rec) => RecommendationCard(
+                                          recommendation: rec,
+                                        ))
+                                    .toList(),
+                              ),
+                      ),
 
-                    const SizedBox(height: 30),
+                      const SizedBox(height: 30),
 
-                    ElevatedButton.icon(
-                      onPressed:
-                          _selectedMood == null ? null : () async => _saveMood(),
-                      icon: const Icon(Icons.save),
-                      label: const Text("Save Mood to History"),
-                    ),
-                  ],
+                      // ⬅️ Reverted back to original Save button
+                      ElevatedButton.icon(
+                        onPressed: _selectedMood == null
+                            ? null
+                            : () async => _saveMood(),
+                        icon: const Icon(Icons.save),
+                        label: const Text("Save Mood to History"),
+                      ),
+                    ],
+                  ),
                 ),
               ),
       ),
