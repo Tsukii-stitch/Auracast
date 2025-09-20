@@ -58,12 +58,12 @@ class Recommendation {
           Recommendation(
               title: "Indoor Café",
               subtitle: "Cozy Jazz",
-              image: "assets/cafe.jpg",
+              image: "assets/cafe.webp",
               info: "Based on: Cloudy Weather, Happy Mood"),
           Recommendation(
               title: "Movie Marathon",
               subtitle: "Comedy Specials",
-              image: "assets/movies.jpg",
+              image: "assets/ movies.jpg",
               info: "Based on: Cloudy Weather, Happy Mood"),
         ];
       } else if (weather.contains("storm")) {

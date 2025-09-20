@@ -1,23 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:aura_cast/widgets/icon.dart';
 
-class HistoryPage extends StatelessWidget {
+class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
 
-  // Fetch history from SharedPreferences
+  @override
+  State<HistoryPage> createState() => _HistoryPageState();
+}
+
+class _HistoryPageState extends State<HistoryPage> {
   Future<List<String>> _getHistory() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getStringList("moodHistory") ?? [];
   }
 
-  // Clear history
-  Future<void> _clearHistory(BuildContext context) async {
+  Future<void> _deleteEntry(int index) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove("moodHistory");
-    Navigator.pop(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("History cleared")),
+    final history = prefs.getStringList("moodHistory") ?? [];
+    if (index >= 0 && index < history.length) {
+      history.removeAt(index);
+      await prefs.setStringList("moodHistory", history);
+      setState(() {}); // refresh UI
+    }
+  }
+
+  void _confirmDelete(int index) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Delete Entry"),
+        content: const Text("Are you sure you want to delete this entry?"),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(), // Cancel
+            child: const Text("Cancel"),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop(); // Close dialog
+              _deleteEntry(index);
+            },
+            child: const Text("Delete", style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
     );
   }
 
@@ -26,12 +52,6 @@ class HistoryPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Mood + Weather History"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () => _clearHistory(context),
-          )
-        ],
       ),
       body: FutureBuilder<List<String>>(
         future: _getHistory(),
@@ -55,6 +75,10 @@ class HistoryPage extends StatelessWidget {
                 title: Text(entry.length > 1 ? entry[1] : "Unknown Mood"),
                 subtitle: Text(
                   "${entry.length > 2 ? entry[2] : ''} - ${entry.length > 3 ? entry[3] : ''}",
+                ),
+                trailing: IconButton(
+                  icon: const Icon(Icons.delete, color: Colors.red),
+                  onPressed: () => _confirmDelete(index),
                 ),
               );
             },
