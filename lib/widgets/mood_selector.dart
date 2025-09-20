@@ -24,6 +24,7 @@ class MoodSelector extends StatelessWidget {
       "Happy": "😊",
       "Melancholy": "😔",
       "Excited": "🤩",
+      "Lazy": "🥱",
     };
 
     return Column(
