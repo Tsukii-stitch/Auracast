@@ -191,6 +191,22 @@ class Recommendation {
       ];
     }
 
+     // Lazy
+    if (mood == "lazy") {
+      return [
+        Recommendation(
+            title: "Gray Skies",
+            subtitle: "Rainy Day Comfort Mix",
+            image: "cozy.jpg",
+            info: "Based on: Any Weather, Lazy Mood"),
+        Recommendation(
+            title: "Fire and Rain",
+            subtitle: "Drizzling Beats & Cozy Treats",
+            image: "rest_grass.jpg",
+            info: "Based on: Any Weather, Lazy Mood"),
+      ];
+    }
+
     // DEFAULT
     return [
       Recommendation(
