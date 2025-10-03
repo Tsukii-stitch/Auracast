@@ -5,6 +5,9 @@ import '../widgets/mood_selector.dart';
 import '../widgets/recommendation_card.dart';
 import '../widgets/icon.dart';
 import '../models/recommendation.dart';
+import 'forecast_page.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 
 class WeatherPage extends StatefulWidget {
   const WeatherPage({super.key});
@@ -67,17 +70,29 @@ class _WeatherPageState extends State<WeatherPage> {
   }
 
   IconData _getWeatherIcon() {
-    switch (_weatherDescription) {
-      case "Clear Sky":
-        return Icons.wb_sunny;
-      case "Rainy":
-        return Icons.beach_access;
-      case "Thunderstorm":
-        return Icons.flash_on;
-      default:
-        return Icons.cloud;
-    }
+  switch (_weatherDescription) {
+    case "Clear Sky":
+      return FontAwesomeIcons.sun;
+    case "Partly Cloudy":
+      return FontAwesomeIcons.cloudSun;
+    case "Cloudy":
+      return FontAwesomeIcons.cloud;
+    case "Rainy":
+    case "Drizzle":
+    case "Rain Showers":
+      return FontAwesomeIcons.cloudRain;
+    case "Thunderstorm":
+      return FontAwesomeIcons.bolt;
+    case "Foggy":
+      return FontAwesomeIcons.smog;
+    case "Snowy":
+      return FontAwesomeIcons.snowflake;
+    default:
+      return FontAwesomeIcons.cloud;
   }
+}
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -87,80 +102,76 @@ class _WeatherPageState extends State<WeatherPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('AuraCast'),
-        actions: const [
-          TopRightIcon(),
+        actions: [
+          // ✅ Forecast button
+          IconButton(
+            icon: const Icon(Icons.calendar_month),
+            tooltip: "View Forecast",
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ForecastPage()),
+              );
+            },
+          ),
+          const TopRightIcon(),
         ],
       ),
       body: SafeArea(
         child: _isLoading
             ? const Center(child: CircularProgressIndicator())
-            : Container(
-                // 🌥️ Cloudy background theme
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.blueGrey.shade200,
-                      Colors.grey.shade400,
-                    ],
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: ListView(
-                    children: [
-                      const SizedBox(height: 20),
+            : Padding(
+                padding: const EdgeInsets.all(20),
+                child: ListView(
+                  children: [
+                    const SizedBox(height: 20),
 
-                      Row(
-                        children: [
-                          Icon(_getWeatherIcon(), size: 28),
-                          const SizedBox(width: 8),
-                          Text("$_temperature, $_weatherDescription",
-                              style: const TextStyle(fontSize: 18)),
-                        ],
-                      ),
+                    Row(
+                      children: [
+                        Icon(_getWeatherIcon(), size: 28),
+                        const SizedBox(width: 8),
+                        Text("$_temperature, $_weatherDescription",
+                            style: const TextStyle(fontSize: 18)),
+                      ],
+                    ),
 
-                      const SizedBox(height: 30),
+                    const SizedBox(height: 30),
 
-                      MoodSelector(
-                        selectedMood: _selectedMood,
-                        onMoodSelected: (mood) {
-                          setState(() {
-                            _selectedMood = mood;
-                          });
-                        },
-                      ),
+                    MoodSelector(
+                      selectedMood: _selectedMood,
+                      onMoodSelected: (mood) {
+                        setState(() {
+                          _selectedMood = mood;
+                        });
+                      },
+                    ),
 
-                      const SizedBox(height: 30),
+                    const SizedBox(height: 30),
 
-                      // ⭐ Animated recommendations list
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 400),
-                        child: _selectedMood == null
-                            ? const SizedBox.shrink()
-                            : Column(
-                                key: ValueKey(_selectedMood),
-                                children: recommendations
-                                    .map((rec) => RecommendationCard(
-                                          recommendation: rec,
-                                        ))
-                                    .toList(),
-                              ),
-                      ),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 400),
+                      child: _selectedMood == null
+                          ? const SizedBox.shrink()
+                          : Column(
+                              key: ValueKey(_selectedMood),
+                              children: recommendations
+                                  .map((rec) => RecommendationCard(
+                                        recommendation: rec,
+                                      ))
+                                  .toList(),
+                            ),
+                    ),
 
-                      const SizedBox(height: 30),
+                    const SizedBox(height: 30),
 
-                      // ⬅️ Reverted back to original Save button
-                      ElevatedButton.icon(
-                        onPressed: _selectedMood == null
-                            ? null
-                            : () async => _saveMood(),
-                        icon: const Icon(Icons.save),
-                        label: const Text("Save Mood to History"),
-                      ),
-                    ],
-                  ),
+                    ElevatedButton.icon(
+                      onPressed: _selectedMood == null
+                          ? null
+                          : () async => _saveMood(),
+                      icon: const Icon(Icons.save),
+                      label: const Text("Save Mood to History"),
+                    ),
+                  ],
                 ),
               ),
       ),

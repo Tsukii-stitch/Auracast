@@ -14,7 +14,7 @@ class AuraCastApp extends StatelessWidget {
       title: 'AuraCast',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blue, 
         fontFamily: 'Inter',
       ),
       home: const WeatherPage(),

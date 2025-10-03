@@ -31,6 +31,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  font_awesome_flutter: ^10.1.0
+
   http: ^1.2.2
   shared_preferences: ^2.3.2
 
