@@ -18,9 +18,7 @@ Make sure Flutter is installed on your computer.
 
 Check installation by running flutter doctor in your terminal.
 
-Open the Project
-
-Open your AuraCast project folder in VS Code or Android Studio.
+Copy the Github repo link and clone it into your VSCODE.
 
 Get Dependencies
 
